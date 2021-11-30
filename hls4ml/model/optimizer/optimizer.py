@@ -12,6 +12,11 @@ class OptimizerPass(object):
 optimizer_map = {}
 
 def register_pass(name, opt_cls):
+    if name == 'relu_merge':
+        print("MergeRelu pass was registered with relu_merge")
+    if name == 'MergeRelu':
+        print("MergeRelu pass was registered with MergeRelu")
+    
     if name in optimizer_map:
         raise Exception('Optimization pass {} already registered'.format(name))
     
@@ -25,6 +30,9 @@ def get_optimizer(name):
     return optimizer_map[name]()
 
 def get_available_passes():
+    print("--------------------------------------------")
+    print(list(optimizer_map.keys))
+    print("--------------------------------------------")
     return list(optimizer_map.keys())
 
 def optimize_model(model, passes=None):

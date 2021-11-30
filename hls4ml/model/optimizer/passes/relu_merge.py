@@ -10,7 +10,7 @@ class MergeRelu(OptimizerPass):
         print("-------------------------------------------------------------")
         print()
         is_match = node.__class__.__name__ == 'Activation' and \
-            node.get_input_node().__class__.__name__ in ['Conv1D', 'Conv2D', 'Dense']
+            node.get_input_node().__class__.__name__ == 'Conv2DBatchNorm'
         return is_match
 
     def transform(self, model, node):
