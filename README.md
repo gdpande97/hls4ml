@@ -8,6 +8,8 @@
 
 A package for machine learning inference in FPGAs. We create firmware implementations of machine learning algorithms using high level synthesis language (HLS). We translate traditional open-source machine learning package models into HLS that can be configured for your use-case!
 
+-------------------GD's Version-------------------
+
 **Contact:** hls4ml.help@gmail.com
 
 # Documentation & Tutorial
