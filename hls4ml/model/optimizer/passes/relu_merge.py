@@ -10,14 +10,21 @@ class MergeRelu(OptimizerPass):
         print("-------------------------------------------------------------")
 
         is_match = node.__class__.__name__ == 'Activation' and \
-            node.get_input_node().__class__.__name__ in ['Conv2D', 'Conv1D']
+            (node.get_input_node().__class__.__name__ == 'Conv2D' or 
+            node.get_input_node().__class__.__name__ == 'Conv2DBatchnorm')
         if is_match:
             print("-------------------------------------------------------------")
-            print("Layer name is ") 
+            print("Merge relu matched, Layer name is ") 
             print(node.__class__.__name__)
             print("Input layer name is ")
             print(node.get_input_node().__class__.__name__)
             print("-------------------------------------------------------------")
+        else:
+            print("-------------------------------------------")
+            print("Did not match merge relu, the layers were")
+            print(node.__class__.__name__)
+            print(node.get_input_node().__class__.__name__)
+            print("-------------------------------------------")
         return is_match
 
     def transform(self, model, node):
