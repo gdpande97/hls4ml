@@ -68,6 +68,8 @@ class HLSConfig(object):
 
         if model_config is not None:
             tempbool = model_config.get(key, default)
+            return tempbool
+            
         return default
 
     def get_layer_config_value(self, layer, key, default=None):
