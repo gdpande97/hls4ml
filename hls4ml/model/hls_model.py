@@ -64,9 +64,10 @@ class HLSConfig(object):
         hls_config = self.config['HLSConfig']
         
         model_config = hls_config.get('Model', None)
-        
+        key = 'MergedRelu'
+
         if model_config is not None:
-            return model_config.get('MergedRelu', default=0)
+            return model_config.get(key, default)
         
         return default
 
