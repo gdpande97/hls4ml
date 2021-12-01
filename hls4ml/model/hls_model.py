@@ -67,8 +67,7 @@ class HLSConfig(object):
         key = 'MergedRelu'
 
         if model_config is not None:
-            return model_config.get(key, default)
-        
+            tempbool = model_config.get(key, default)
         return default
 
     def get_layer_config_value(self, layer, key, default=None):

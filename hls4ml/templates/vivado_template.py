@@ -14,6 +14,7 @@ dense_config_template = """struct config{index} : nnet::dense_config {{
     static const unsigned reuse_factor = {reuse};
     static const unsigned n_zeros = {nzeros};
     static const unsigned n_nonzeros = {nonzeros};
+    static const bool merged_relu = {merged_relu};
     static const bool store_weights_in_bram = false;
     typedef {accum_t} accum_t;
     typedef {bias_t} bias_t;
