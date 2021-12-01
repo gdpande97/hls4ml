@@ -9,9 +9,9 @@ class MergeRelu(OptimizerPass):
 
     def transform(self, model, node):
         #Merge ReLU and Convolution layer if needed
-        if not node.get_output_nodes():
-            print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))
-            model.remove_node(node, rewire=False)
-        else:
-            model.remove_node(node, rewire=True)
+        # if not node.get_output_nodes():
+        #     print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))
+        #     model.remove_node(node, rewire=False)
+        # else:
+        model.remove_node(node, rewire=True)
         return True

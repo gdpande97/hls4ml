@@ -926,7 +926,7 @@ class Conv2D(Layer):
         print("The output nodes are ")
         print(self.get_output_nodes())
         print("--------------------------------------------") 
-        mult_params['out_t'] = self.get_input_variable().type.name
+        mult_params['out_t'] = self.get_output_variable().type.name
         mult_config = self._config_template[1].format(**mult_params)
 
         return mult_config + '\n' + conv_config
