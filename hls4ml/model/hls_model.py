@@ -1,4 +1,5 @@
 from __future__ import print_function
+from email.policy import default
 import six
 import os
 import sys
@@ -58,6 +59,16 @@ class HLSConfig(object):
 
     def get_output_dir(self):
         return self.get_config_value('OutputDir')
+
+    def get_merged_relu(self, default=None):
+        hls_config = self.config['HLSConfig']
+        
+        model_config = hls_config.get('Model', None)
+        
+        if model_config is not None:
+            return model_config.get('MergedRelu', default=0)
+        
+        return default
 
     def get_layer_config_value(self, layer, key, default=None):
         hls_config = self.config['HLSConfig']

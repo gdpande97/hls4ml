@@ -644,7 +644,7 @@ class Dense(Layer):
         params['n_out'] = self.get_output_variable().size_cpp()
         params['nzeros'] = self.get_weights('weight').nzeros
         params['nonzeros'] = self.get_weights('weight').nonzeros
-        params['merged_relu'] = self.model.config.get_layer_config_value(self, 'MergedRelu', default=0)
+        params['merged_relu'] = self.model.config.get_merged_relu()
         print("---------------------------------------------------")
         print("Value of merged relu is ")
         print(params['merged_relu'])
@@ -925,11 +925,6 @@ class Conv2D(Layer):
         mult_params = self._default_config_params()
         mult_params['n_in'] = self.get_attr('n_chan') * self.get_attr('filt_height') * self.get_attr('filt_width')
         mult_params['n_out'] = self.get_attr('n_filt')
-        print("-------------------------------------------------------")
-        print("Value of merged relu in params is ")
-        print (self.model.config)
-        print("-------------------------------------------------------")
-        mult_params['merged_relu'] = self.model.config.get_config_value('MergedRelu')
         mult_params['product_type'] = self.model.config.backend.product_type(self.get_input_variable().type.precision, self.get_weights('weight').type.precision)
         mult_config = self._config_template[1].format(**mult_params)
 
