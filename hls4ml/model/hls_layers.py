@@ -644,7 +644,7 @@ class Dense(Layer):
         params['n_out'] = self.get_output_variable().size_cpp()
         params['nzeros'] = self.get_weights('weight').nzeros
         params['nonzeros'] = self.get_weights('weight').nonzeros
-        params['merged_relu'] = self.get_layer_config_value(self, 'MergedRelu', default=0)
+        params['merged_relu'] = self.model.config.get_layer_config_value(self, 'MergedRelu', default=0)
         print("---------------------------------------------------")
         print("Value of merged relu is ")
         print(params['merged_relu'])
