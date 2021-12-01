@@ -644,18 +644,7 @@ class Dense(Layer):
         params['n_out'] = self.get_output_variable().size_cpp()
         params['nzeros'] = self.get_weights('weight').nzeros
         params['nonzeros'] = self.get_weights('weight').nonzeros
-        params['merged_relu'] = bool(self.model.config.get_merged_relu())
-        params['merged_relu_str'] = str(self.model.config.get_merged_relu()).lower()
-        params['merged_relu_bool_str'] = str(bool(self.model.config.get_merged_relu())).lower()
-        print("---------------------------------------------------")
-        print("Value of merged relu is ")
-        print(params['merged_relu'])
-        print("Value of merged relu string")
-        print(params['merged_relu_str'])
-        print("Value of merged relu bool to string")
-        print(params['merged_relu_bool_str'])
-        print()
-        print("---------------------------------------------------")
+        params['merged_relu'] = str(bool(self.model.config.get_merged_relu())).lower()
         params['product_type'] = self.model.config.backend.product_type(self.get_input_variable().type.precision, self.get_weights('weight').type.precision)
         params['strategy'] = self.get_attr('strategy')
 
