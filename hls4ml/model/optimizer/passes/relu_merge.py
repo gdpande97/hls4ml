@@ -12,6 +12,8 @@ class MergeRelu(OptimizerPass):
         next_node = next((x for x in model.graph.values() if node.outputs[0] in x.inputs), None)
         print("---------------------")
         print(next_node.inputs)
+        print(next_node.__class__.__name__)
+        print(next_node.outputs)
         print("---------------------")
         if not node.get_output_nodes():
             print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))
