@@ -2,6 +2,10 @@ from hls4ml.model.optimizer import OptimizerPass
 
 class MergeRelu(OptimizerPass):
     def match(self, node):
+        print("-------------------------------------------")
+        print("layer name is ")
+        print(self.__class__.__name__)
+        print("-------------------------------------------")
         is_match = node.__class__.__name__ == 'Activation' and \
             (node.get_input_node().__class__.__name__ == 'Conv2D' or 
             node.get_input_node().__class__.__name__ == 'Conv2DBatchnorm')
