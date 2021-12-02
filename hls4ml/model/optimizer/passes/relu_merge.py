@@ -2,10 +2,6 @@ from hls4ml.model.optimizer import OptimizerPass
 
 class MergeRelu(OptimizerPass):
     def match(self, node):
-        print("-------------------------------------------")
-        print("layer name is ")
-        print(node.__class__.__name__)
-        print("-------------------------------------------")
         is_match = node.__class__.__name__ == 'Activation' and \
             (node.get_input_node().__class__.__name__ == 'Conv2D' or 
             node.get_input_node().__class__.__name__ == 'Conv2DBatchnorm')
@@ -14,10 +10,16 @@ class MergeRelu(OptimizerPass):
     def transform(self, model, node):
         #Merge ReLU and Convolution layer if needed
         next_node = next((x for x in model.graph.values() if node.outputs[0] in x.inputs), None)
+        next_next_node  = next((x for x in model.graph.values() if next_node.outputs[0] in x.inputs), None)
         print("---------------------")
         print(next_node.inputs)
         print(next_node.__class__.__name__)
         print(next_node.outputs)
+        print("---------------------")
+        print("---------------------")
+        print(next_next_node.inputs)
+        print(next_next_node.__class__.__name__)
+        print(next_next_node.outputs)
         print("---------------------")
         if not node.get_output_nodes():
             print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))

@@ -587,20 +587,10 @@ class Reshape(Layer):
         dims = ['N_SIZE_{}_{}'.format(i, self.index) for i in range(1, len(shape) + 1)]
 
         out_name = self.outputs[0]
-        print("-------------------------------------------")
-        print("reshape out_name is ")
-        print(out_name)
-        print("-------------------------------------------")
         proxy = self.get_input_variable()
         out = InplaceVariable(shape, dims, proxy, index=self.get_input_node().index)
-
         self.variables[out_name] = out
         self.model.register_output_variable(out_name, out)
-
-        print("-------------------------------------------")
-        print("reshape output is ")
-        print(self.variables[out_name])
-        print("-------------------------------------------")
 
     def function_cpp(self):
         return None
