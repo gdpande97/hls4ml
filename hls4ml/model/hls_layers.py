@@ -921,10 +921,6 @@ class Conv2D(Layer):
         mult_params['n_out'] = self.get_attr('n_filt')
         mult_params['product_type'] = self.model.config.backend.product_type(self.get_input_variable().type.precision, self.get_weights('weight').type.precision)
         mult_params['merged_relu'] = str(bool(self.model.config.get_merged_relu())).lower()
-        print("--------------------------------------------")
-        print("The output nodes are ")
-        print(self.get_output_nodes())
-        print("--------------------------------------------") 
         mult_params['out_t'] = self.get_output_variable().type.name
         mult_config = self._config_template[1].format(**mult_params)
 

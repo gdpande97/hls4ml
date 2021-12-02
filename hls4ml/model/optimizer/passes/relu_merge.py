@@ -14,7 +14,7 @@ class MergeRelu(OptimizerPass):
         print("---------------------")
         print(next_node.inputs)
         print(next_node.__class__.__name__)
-        print(next_node.outputs)
+        print(next_node.outputs.__class__.__name__)
         print("---------------------")
         print("---------------------")
         print(next_next_node.inputs)
