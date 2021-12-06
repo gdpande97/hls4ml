@@ -592,6 +592,10 @@ class Reshape(Layer):
 
         out_name = self.outputs[0]
         proxy = self.get_input_variable()
+        print("-----------------------------")
+        print("printing from reshape ")
+        print(proxy.name)
+        print("------------------------------")
         out = InplaceVariable(shape, dims, proxy, index=self.get_input_node().index)
         self.variables[out_name] = out
         self.model.register_output_variable(out_name, out)
@@ -621,11 +625,6 @@ class Dense(Layer):
                 self.set_attr('strategy', 'resource')
         else:
             self.set_attr('strategy', 'latency')
-        print("-------------------------")
-        print("printing from dense, output var name is ")
-        print(self.get_input_node().get_output_variable().name)
-        print(self.get_input_node().get_output_variable().shape[:])
-        print("-------------------------")
         self.add_output_variable(shape, dims)
         self.add_weights(quantizer=self.get_attr('weight_quantizer'), compression=compression)
         index_t = IntegerPrecisionType(width=1, signed=False)
