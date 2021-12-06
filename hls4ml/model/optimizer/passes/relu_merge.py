@@ -9,8 +9,8 @@ class MergeRelu(OptimizerPass):
 
     def transform(self, model, node):
         #Merge ReLU and Convolution layer if needed
-        next_node = next((x for x in model.graph.values() if node.outputs[0] in x.inputs), None)
-        next_next_node  = next((x for x in model.graph.values() if next_node.outputs[0] in x.inputs), None)
+        # next_node = next((x for x in model.graph.values() if node.outputs[0] in x.inputs), None)
+        # next_next_node  = next((x for x in model.graph.values() if next_node.outputs[0] in x.inputs), None)
         # print("---------------------------------")
         # print("printing for " + node.get_input_node().__class__.__name__)
         # print("output is " + node.get_input_node().get_output_variable().name)
@@ -36,6 +36,12 @@ class MergeRelu(OptimizerPass):
         # print("output is " + next_next_node.get_output_variable().name)
         # print("output type is " + next_next_node.get_output_variable().type.name)
         # print("---------------------")
+
+        print("-------------------------")
+        print("printing from relu merge")
+        print(node.get_input_node().index)
+        print(node.index)
+        print("--------------------------")
         if not node.get_output_nodes():
             print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))
             model.remove_node(node, rewire=False)
