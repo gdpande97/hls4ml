@@ -592,13 +592,14 @@ class Reshape(Layer):
 
         out_name = self.outputs[0]
         proxy = self.get_input_variable()
+        out = InplaceVariable(shape, dims, proxy, index=self.get_input_node().index)
+        self.variables[out_name] = out
         print("-----------------------------")
         print("printing from reshape ")
         print(proxy.name)
         print(out_name)
+        print(out.name)
         print("------------------------------")
-        out = InplaceVariable(shape, dims, proxy, index=self.get_input_node().index)
-        self.variables[out_name] = out
         self.model.register_output_variable(out_name, out)
 
     def function_cpp(self):
