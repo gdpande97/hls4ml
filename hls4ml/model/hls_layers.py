@@ -410,6 +410,10 @@ class Layer(object):
         else:
             return next(iter(self.variables.values()))
 
+    def set_output_variable(self, output_name, output_value):
+        self.variables[output_name] = output_value
+
+
     def get_weights(self, var_name=None):
         if var_name:
             return self.weights[var_name]
@@ -854,6 +858,15 @@ class Conv2D(Layer):
             shape = [self.attributes['n_filt'], self.attributes['out_height'], self.attributes['out_width']]
             dims = ['N_FILT_{}'.format(self.index), 'OUT_HEIGHT_{}'.format(self.index), 'OUT_WIDTH_{}'.format(self.index)]
         self.add_output_variable(shape, dims)
+        next_node = next((x for x in self.model.graph.values() if self.outputs[0] in x.inputs), None)
+        print("-----------------------")
+        print("inside conv2d, trying to get output node's variable")
+        print(next_node.get_output_variable().name)
+        print(next_node.get_output_variable().type.name)
+        print("trying to get output shapes and dim")
+        print(next_node.attributes['n_filt'] + next_node.attributes['out_height'] + next_node.attributes['out_width'])
+        print(self.attributes['n_filt'] + self.attributes['out_height'] + self.attributes['out_width'])
+        print("-----------------------")
         self.add_weights(quantizer=self.get_attr('weight_quantizer'))
         self.add_bias(quantizer=self.get_attr('bias_quantizer'))
         if len(self.weights['weight'].data.shape) == 2: # This can happen if we assign weights of Dense layer to 1x1 Conv2D
