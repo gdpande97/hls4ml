@@ -42,6 +42,7 @@ class MergeRelu(OptimizerPass):
         print(node.get_input_node().index)
         print(node.index)
         print("--------------------------")
+        node.get_input_node().index = node.index
         if not node.get_output_nodes():
             print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))
             model.remove_node(node, rewire=False)
