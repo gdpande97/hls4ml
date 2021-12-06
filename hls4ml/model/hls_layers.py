@@ -868,6 +868,7 @@ class Conv2D(Layer):
         print(self.get_output_nodes())
         print(self.get_output_nodes().__class__.__name__)
         print("------------------------------")
+        self.index = self.index + 2
         self.add_output_variable(shape, dims)
         self.add_weights(quantizer=self.get_attr('weight_quantizer'))
         self.add_bias(quantizer=self.get_attr('bias_quantizer'))
