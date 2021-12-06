@@ -858,7 +858,7 @@ class Conv2D(Layer):
             shape = [self.attributes['n_filt'], self.attributes['out_height'], self.attributes['out_width']]
             dims = ['N_FILT_{}'.format(self.index), 'OUT_HEIGHT_{}'.format(self.index), 'OUT_WIDTH_{}'.format(self.index)]
         self.add_output_variable(shape, dims)
-        next_node = next((x for x in self.model.graph.values() if self.outputs[0] in x.inputs), None)
+        next_node = self.index
         print("-----------------------")
         print("inside conv2d, trying to get output node's variable")
         print(next_node.get_output_variable().name)
