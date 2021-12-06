@@ -621,6 +621,11 @@ class Dense(Layer):
                 self.set_attr('strategy', 'resource')
         else:
             self.set_attr('strategy', 'latency')
+        print("-------------------------")
+        print("printing from dense, output var name is ")
+        print(self.get_input_node().get_output_variable().name)
+        print(self.get_input_node().get_output_variable().shape[:])
+        print("-------------------------")
         self.add_output_variable(shape, dims)
         self.add_weights(quantizer=self.get_attr('weight_quantizer'), compression=compression)
         index_t = IntegerPrecisionType(width=1, signed=False)
@@ -858,15 +863,6 @@ class Conv2D(Layer):
             shape = [self.attributes['n_filt'], self.attributes['out_height'], self.attributes['out_width']]
             dims = ['N_FILT_{}'.format(self.index), 'OUT_HEIGHT_{}'.format(self.index), 'OUT_WIDTH_{}'.format(self.index)]
         self.add_output_variable(shape, dims)
-        next_node = self.index
-        print("-----------------------")
-        print("inside conv2d, trying to get output node's variable")
-        print(next_node.get_output_variable().name)
-        print(next_node.get_output_variable().type.name)
-        print("trying to get output shapes and dim")
-        print(next_node.attributes['n_filt'] + next_node.attributes['out_height'] + next_node.attributes['out_width'])
-        print(self.attributes['n_filt'] + self.attributes['out_height'] + self.attributes['out_width'])
-        print("-----------------------")
         self.add_weights(quantizer=self.get_attr('weight_quantizer'))
         self.add_bias(quantizer=self.get_attr('bias_quantizer'))
         if len(self.weights['weight'].data.shape) == 2: # This can happen if we assign weights of Dense layer to 1x1 Conv2D
