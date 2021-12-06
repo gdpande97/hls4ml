@@ -863,6 +863,11 @@ class Conv2D(Layer):
         else:
             shape = [self.attributes['n_filt'], self.attributes['out_height'], self.attributes['out_width']]
             dims = ['N_FILT_{}'.format(self.index), 'OUT_HEIGHT_{}'.format(self.index), 'OUT_WIDTH_{}'.format(self.index)]
+        print("------------------------------")
+        print("printing from conv2d")
+        print(self.get_output_nodes())
+        print(self.get_output_nodes().__class__.__name__)
+        print("------------------------------")
         self.add_output_variable(shape, dims)
         self.add_weights(quantizer=self.get_attr('weight_quantizer'))
         self.add_bias(quantizer=self.get_attr('bias_quantizer'))
