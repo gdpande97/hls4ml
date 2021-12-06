@@ -595,6 +595,7 @@ class Reshape(Layer):
         print("-----------------------------")
         print("printing from reshape ")
         print(proxy.name)
+        print(out_name)
         print("------------------------------")
         out = InplaceVariable(shape, dims, proxy, index=self.get_input_node().index)
         self.variables[out_name] = out
