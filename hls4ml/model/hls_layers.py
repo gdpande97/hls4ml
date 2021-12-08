@@ -594,12 +594,6 @@ class Reshape(Layer):
         proxy = self.get_input_variable()
         out = InplaceVariable(shape, dims, proxy, index=self.get_input_node().index)
         self.variables[out_name] = out
-        print("-----------------------------")
-        print("printing from reshape ")
-        print(proxy.name)
-        print(out_name)
-        print(out.name)
-        print("------------------------------")
         self.model.register_output_variable(out_name, out)
 
     def function_cpp(self):
@@ -655,7 +649,7 @@ class Dense(Layer):
         params['nonzeros'] = self.get_weights('weight').nonzeros
         params['product_type'] = self.model.config.backend.product_type(self.get_input_variable().type.precision, self.get_weights('weight').type.precision)
         params['strategy'] = self.get_attr('strategy')
-        params['merged_relu'] = str(bool(self.model.config.get_merged_relu())).lower()
+        params['merged_relu'] = "false"
         params['out_t'] = self.get_output_variable().type.name
         return self._config_template.format(**params)
 
