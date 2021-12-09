@@ -860,7 +860,7 @@ class Conv2D(Layer):
             dims = ['N_FILT_{}'.format(self.index), 'OUT_HEIGHT_{}'.format(self.index), 'OUT_WIDTH_{}'.format(self.index)]
         # self.index = self.index + 2
         # if(not bool(self.model.config.get_merged_relu())):
-        # self.attributes['intermediate_index'] = self.index
+        self.attributes['intermediate_index'] = self.index
         self.add_output_variable(shape, dims)
         self.intermediate_op = self.get_output_variable()
         self.add_weights(quantizer=self.get_attr('weight_quantizer'))
