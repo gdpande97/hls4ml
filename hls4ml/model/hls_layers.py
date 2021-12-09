@@ -858,13 +858,9 @@ class Conv2D(Layer):
         else:
             shape = [self.attributes['n_filt'], self.attributes['out_height'], self.attributes['out_width']]
             dims = ['N_FILT_{}'.format(self.index), 'OUT_HEIGHT_{}'.format(self.index), 'OUT_WIDTH_{}'.format(self.index)]
-        print("------------------------------")
-        print("printing from conv2d")
-        print(self.get_output_nodes())
-        print(self.get_output_nodes().__class__.__name__)
-        print("------------------------------")
-        self.index = self.index + 2
-        self.add_output_variable(shape, dims)
+        # self.index = self.index + 2
+        if(not bool(self.model.config.get_merged_relu())):
+            self.add_output_variable(shape, dims)
         self.add_weights(quantizer=self.get_attr('weight_quantizer'))
         self.add_bias(quantizer=self.get_attr('bias_quantizer'))
         if len(self.weights['weight'].data.shape) == 2: # This can happen if we assign weights of Dense layer to 1x1 Conv2D

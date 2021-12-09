@@ -37,19 +37,15 @@ class MergeRelu(OptimizerPass):
         # print("output type is " + next_next_node.get_output_variable().type.name)
         # print("---------------------")
 
-        print("-------------------------")
-        print("printing from relu merge")
-        print(node.get_input_node().__class__.__name__)
-        print(node.get_input_node().index)
-        print(node.index)
-        print("--------------------------")
-        node.get_input_node().index = node.index
-        print("-------------------------")
-        print("printing from relu merge")
-        print(node.get_input_node().__class__.__name__)
-        print(node.get_input_node().index)
-        print(node.index)
-        print("--------------------------")
+        previous_node = node.get_input_node()
+        previous_node.index = node.index
+        if previous_node.get_attr('data_format') == 'channels_last':
+            shape = [previous_node.attributes['out_height'], previous_node.attributes['out_width'], previous_node.attributes['n_filt']]
+            dims = ['OUT_HEIGHT_{}'.format(previous_node.index), 'OUT_WIDTH_{}'.format(previous_node.index), 'N_FILT_{}'.format(previous_node.index)]
+        else:
+            shape = [previous_node.attributes['n_filt'], previous_node.attributes['out_height'], previous_node.attributes['out_width']]
+            dims = ['N_FILT_{}'.format(previous_node.index), 'OUT_HEIGHT_{}'.format(previous_node.index), 'OUT_WIDTH_{}'.format(previous_node.index)]
+        previous_node.add_output_variable(shape, dims)
         # node.get_input_node().index = node.index
         if not node.get_output_nodes():
             print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))
