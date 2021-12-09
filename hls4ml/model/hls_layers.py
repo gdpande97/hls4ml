@@ -860,8 +860,9 @@ class Conv2D(Layer):
             dims = ['N_FILT_{}'.format(self.index), 'OUT_HEIGHT_{}'.format(self.index), 'OUT_WIDTH_{}'.format(self.index)]
         # self.index = self.index + 2
         # if(not bool(self.model.config.get_merged_relu())):
-        self.attributes['intermediate_index'] = self.index
+        # self.attributes['intermediate_index'] = self.index
         self.add_output_variable(shape, dims)
+        self.intermediate_op = self.get_output_variable()
         self.add_weights(quantizer=self.get_attr('weight_quantizer'))
         self.add_bias(quantizer=self.get_attr('bias_quantizer'))
         if len(self.weights['weight'].data.shape) == 2: # This can happen if we assign weights of Dense layer to 1x1 Conv2D
@@ -929,7 +930,7 @@ class Conv2D(Layer):
         mult_params['n_out'] = self.get_attr('n_filt')
         mult_params['product_type'] = self.model.config.backend.product_type(self.get_input_variable().type.precision, self.get_weights('weight').type.precision)
         mult_params['merged_relu'] = str(bool(self.model.config.get_merged_relu())).lower()
-        mult_params['out_t'] = self.attributes['intermediate_index']
+        mult_params['out_t'] = self.intermediate_op.type.name
         mult_config = self._config_template[1].format(**mult_params)
 
         return mult_config + '\n' + conv_config
