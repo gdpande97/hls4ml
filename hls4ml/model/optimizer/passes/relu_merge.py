@@ -39,9 +39,16 @@ class MergeRelu(OptimizerPass):
 
         previous_node = node.get_input_node()
         previous_node.index = node.index
-        print("---------------------------------")
-        print(previous_node.variables[previous_node.outputs[0]])
-        print("----------------------------------")
+        if previous_node.get_attr('data_format') == 'channels_last':
+            shape = [previous_node.attributes['out_height'], previous_node.attributes['out_width'], previous_node.attributes['n_filt']]
+            dims = ['OUT_HEIGHT_{}'.format(previous_node.index), 'OUT_WIDTH_{}'.format(previous_node.index), 'N_FILT_{}'.format(previous_node.index)]
+        else:
+            shape = [previous_node.attributes['n_filt'], previous_node.attributes['out_height'], previous_node.attributes['out_width']]
+            dims = ['N_FILT_{}'.format(previous_node.index), 'OUT_HEIGHT_{}'.format(previous_node.index), 'OUT_WIDTH_{}'.format(previous_node.index)]
+        previous_node.add_output_variable(shape, dims)
+        print("-------------------------------")
+        print(previous_node.attributes['intermediate_index'])
+        print("-------------------------------")
         # node.get_input_node().index = node.index
         if not node.get_output_nodes():
             print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))
