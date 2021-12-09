@@ -39,7 +39,10 @@ class MergeRelu(OptimizerPass):
 
         previous_node = node.get_input_node()
         previous_node.index = node.index
+        print("---------------------------------")
         print(previous_node.variables.values())
+        print(next(iter(previous_node.variables.values())))
+        print("----------------------------------")
         # node.get_input_node().index = node.index
         if not node.get_output_nodes():
             print("WARNING: {} is the output layer! No rewiring performed.".format(node.name))
